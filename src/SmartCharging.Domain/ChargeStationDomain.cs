@@ -33,5 +33,18 @@ namespace SmartCharging.Domain
             }
 
         }
+
+        public async Task<ChargeStation> Update(ChargeStation chargeStation)
+        {
+            try
+            {
+                return await _chargeStationService.Update(chargeStation);
+            }
+            catch (Exception ex)
+            {
+                _loggs.LogError(ex, "Something when wrong trying to update a new charge station");
+                throw;
+            }
+        }
     }
 }

@@ -39,5 +39,28 @@ namespace SmartCharging.Api.Controllers
         {
             return await _stationDomain.Save(new ChargeStation() { Name = chargeStation.Name, GroupId = groupId });
         }
+
+        /// <summary>
+        /// Update a specific charge station.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Put /Groups/1/chargeStations/1
+        ///     {
+        ///        "name": "Group 1"
+        ///     }
+        ///
+        /// </remarks>
+        /// <returns>The group updated</returns>
+        /// <response code="200">The chargeStation updated</response>
+        /// <response code="400">The chargeStation is not valid</response>    
+        /// <response code="404">The chargeStation does not exist</response>
+        /// <response code="500">Something went wrong</response>  
+        [HttpPut("{id}")]
+        public async Task<ChargeStation> Put(int groupId, int id, ChargeStationDto chargeStation)
+        {
+            return await _stationDomain.Update(new ChargeStation() { Id = id, Name = chargeStation.Name, GroupId = groupId });
+        }
     }
 }

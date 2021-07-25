@@ -6,5 +6,6 @@ namespace SmartCharging.Domain.Interfaces
     public interface IChargeStationDomain
     {
         Task<ChargeStation> Save(ChargeStation chargeStation);
+        Task<ChargeStation> Update(ChargeStation chargeStation);
     }
 }
