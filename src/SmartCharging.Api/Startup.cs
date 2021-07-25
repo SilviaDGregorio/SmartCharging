@@ -52,18 +52,14 @@ namespace SmartCharging.Api
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SmartCharging.Api v1"));
+                app.UseExceptionHandler("/error-local-development");
             }
-            app.UseExceptionHandler(c => c.Run(async context =>
+            else
             {
-                var exception = context.Features
-                    .Get<IExceptionHandlerPathFeature>()
-                    .Error;
-                var response = new { error = exception.Message };
-                await context.Response.WriteAsJsonAsync(response);
-            }));
+                app.UseExceptionHandler("/error");
+            }
 
             app.UseHttpsRedirection();
 

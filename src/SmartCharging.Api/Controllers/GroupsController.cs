@@ -2,7 +2,6 @@
 using SmartCharging.Api.DTO;
 using SmartCharging.Domain.Entities;
 using SmartCharging.Domain.Interfaces;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SmartCharging.Api.Controllers
@@ -33,7 +32,8 @@ namespace SmartCharging.Api.Controllers
         /// <param name="group"></param>  
         /// <returns>The group created</returns>
         /// <response code="200">Return the group created</response>
-        /// <response code="400">The group is not valid</response>    
+        /// <response code="400">The group is not valid</response>   
+        /// <response code="500">Something went wrong</response>   
         [HttpPost]
         public async Task<Group> Post(GroupDto group)
         {
@@ -56,6 +56,8 @@ namespace SmartCharging.Api.Controllers
         /// <returns>The group updated</returns>
         /// <response code="200">The group updated</response>
         /// <response code="400">The group is not valid</response>    
+        /// <response code="404">The group does not exist</response>
+        /// <response code="500">Something went wrong</response>    
         [HttpPut("id")]
         public async Task<Group> Put(int id, GroupDto group)
         {

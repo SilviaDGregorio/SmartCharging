@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SmartCharging.Domain.Entities;
+﻿using SmartCharging.Domain.Entities;
 using SmartCharging.Domain.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;

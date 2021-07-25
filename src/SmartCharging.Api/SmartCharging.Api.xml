@@ -21,25 +21,28 @@
              <param name="group"></param>  
              <returns>The group created</returns>
              <response code="200">Return the group created</response>
-             <response code="400">The group is not valid</response>    
+             <response code="400">The group is not valid</response>   
+             <response code="500">Something went wrong</response>   
         </member>
         <member name="M:SmartCharging.Api.Controllers.GroupsController.Put(System.Int32,SmartCharging.Api.DTO.GroupDto)">
              <summary>
-             Change a specific group.
+             Update a specific group.
              </summary>
              <remarks>
              Sample request:
             
-                 POST /Groups/1
+                 Put /Groups/1
                  {
                     "name": "Group 1",
                     "amps": 1.2 //Should be greater than 0
                  }
             
              </remarks>
-             <returns>A list of groups</returns>
-             <response code="200">A list of groups</response>
+             <returns>The group updated</returns>
+             <response code="200">The group updated</response>
              <response code="400">The group is not valid</response>    
+             <response code="404">The group does not exist</response>
+             <response code="500">Something went wrong</response>    
         </member>
         <member name="M:SmartCharging.Api.DTO.RequiredGreaterThanZeroValidation.IsValid(System.Object)">
             <param name="value">The float value of the selection</param>
