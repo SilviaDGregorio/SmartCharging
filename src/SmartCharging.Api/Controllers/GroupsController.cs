@@ -39,5 +39,28 @@ namespace SmartCharging.Api.Controllers
         {
             return await _groupDomain.Save(new Group() { Name = group.Name, Amps = group.Amps });
         }
+
+        /// <summary>
+        /// Update a specific group.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Put /Groups/1
+        ///     {
+        ///        "name": "Group 1",
+        ///        "amps": 1.2 //Should be greater than 0
+        ///     }
+        ///
+        /// </remarks>
+        /// <returns>The group updated</returns>
+        /// <response code="200">The group updated</response>
+        /// <response code="400">The group is not valid</response>    
+        [HttpPut("id")]
+        public async Task<Group> Put(int id, GroupDto group)
+        {
+            return await _groupDomain.Update(new Group() { Id = id, Name = group.Name, Amps = group.Amps });
+        }
+
     }
 }

@@ -23,6 +23,24 @@
              <response code="200">Return the group created</response>
              <response code="400">The group is not valid</response>    
         </member>
+        <member name="M:SmartCharging.Api.Controllers.GroupsController.Put(System.Int32,SmartCharging.Api.DTO.GroupDto)">
+             <summary>
+             Change a specific group.
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /Groups/1
+                 {
+                    "name": "Group 1",
+                    "amps": 1.2 //Should be greater than 0
+                 }
+            
+             </remarks>
+             <returns>A list of groups</returns>
+             <response code="200">A list of groups</response>
+             <response code="400">The group is not valid</response>    
+        </member>
         <member name="M:SmartCharging.Api.DTO.RequiredGreaterThanZeroValidation.IsValid(System.Object)">
             <param name="value">The float value of the selection</param>
             <returns>True if value is greater than zero</returns>

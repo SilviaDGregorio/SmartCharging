@@ -30,5 +30,18 @@ namespace SmartCharging.Domain
                 throw;
             }
         }
+
+        public async Task<Group> Update(Group group)
+        {
+            try
+            {
+                return await _groupService.Update(group);
+            }
+            catch (Exception ex)
+            {
+                _loggs.LogError(ex, "Something when wrong trying to update a new group");
+                throw;
+            }
+        }
     }
 }

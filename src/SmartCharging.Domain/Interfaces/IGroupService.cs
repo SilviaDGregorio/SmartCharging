@@ -6,5 +6,6 @@ namespace SmartCharging.Domain.Interfaces
     public interface IGroupService
     {
         Task<Group> Save(Group group);
+        Task<Group> Update(Group group);
     }
 }
