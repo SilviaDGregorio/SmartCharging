@@ -7,5 +7,6 @@ namespace SmartCharging.Domain.Interfaces
     {
         Task<ChargeStation> Save(ChargeStation chargeStation);
         Task<ChargeStation> Update(ChargeStation chargeStation);
+        Task Delete(int groupId, int id);
     }
 }

@@ -19,6 +19,19 @@ namespace SmartCharging.Domain
             _chargeStationService = chargeStationService;
         }
 
+        public async Task Delete(int groupId, int id)
+        {
+            try
+            {
+                await _chargeStationService.Delete(groupId, id);
+            }
+            catch (Exception ex)
+            {
+                _loggs.LogError(ex, "Something when wrong trying to delete the charge station");
+                throw;
+            }
+        }
+
         public async Task<ChargeStation> Save(ChargeStation chargeStation)
         {
             try

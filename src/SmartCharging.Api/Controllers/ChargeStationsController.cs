@@ -62,5 +62,18 @@ namespace SmartCharging.Api.Controllers
         {
             return await _stationDomain.Update(new ChargeStation() { Id = id, Name = chargeStation.Name, GroupId = groupId });
         }
+
+        /// <summary>
+        /// Delete a specific charge station.
+        /// </summary>
+        /// <remarks>
+        /// <response code="200">The charge station has been deleted</response>  
+        /// <response code="404">The charge station does not exist</response>
+        /// <response code="500">Something went wrong</response>    
+        [HttpDelete("{id}")]
+        public async Task Delete(int groupId, int id)
+        {
+            await _stationDomain.Delete(groupId, id);
+        }
     }
 }

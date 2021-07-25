@@ -31,14 +31,21 @@ namespace SmartCharging.DataAccess
             return chargeStationDb;
         }
 
-        public async Task<ChargeStation> GetById(int id, int chargeId)
+        public async Task<ChargeStation> GetById(int id, int groupId)
         {
-            var stationDb = await _dbContext.ChargeStation.FirstOrDefaultAsync(x => x.Id == id && x.GroupId == chargeId);
+            var stationDb = await _dbContext.ChargeStation.FirstOrDefaultAsync(x => x.Id == id && x.GroupId == groupId);
             if (stationDb == null)
             {
-                throw new KeyNotFoundException($"The charge station with id: {id} and groupId: {chargeId} does not exist");
+                throw new KeyNotFoundException($"The charge station with id: {id} and groupId: {groupId} does not exist");
             }
             return stationDb;
+        }
+
+        public async Task Delete(int groupId, int id)
+        {
+            var charge = await GetById(id, groupId);
+            _dbContext.ChargeStation.Remove(charge);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
