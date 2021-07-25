@@ -1,6 +1,4 @@
-using System;
-
-namespace SmartCharging.Api
+namespace SmartCharging.Domain.Entities
 {
     public class Group
     {

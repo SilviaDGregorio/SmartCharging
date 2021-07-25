@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using SmartCharging.Domain.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace SmartCharging.Api.Controllers
 {
@@ -11,10 +9,16 @@ namespace SmartCharging.Api.Controllers
     [Route("[controller]")]
     public class GroupController : ControllerBase
     {
-
-        [HttpGet]
-        public async Task<IEnumerable<Group>> Get()
+        private readonly IGroupDomain _groupDomain;
+        public GroupController(IGroupDomain groupDomain)
         {
+            _groupDomain = groupDomain;
+        }
+
+        [HttpPost]
+        public async Task<IEnumerable<Group>> Post(Group group)
+        {
+            return await _groupDomain.
             return new List<Group>();
         }
     }
