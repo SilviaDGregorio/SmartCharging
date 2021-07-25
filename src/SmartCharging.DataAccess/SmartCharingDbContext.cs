@@ -7,5 +7,6 @@ namespace SmartCharging.DataAccess
     {
         public SmartCharingDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions) { }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<ChargeStation> ChargeStation { get; set; }
     }
 }

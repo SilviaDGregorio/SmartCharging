@@ -7,5 +7,7 @@ namespace SmartCharging.Domain.Interfaces
     {
         Task<Group> Save(Group group);
         Task<Group> Update(Group group);
+        Task Delete(int id);
+        Task<Group> GetById(int id);
     }
 }

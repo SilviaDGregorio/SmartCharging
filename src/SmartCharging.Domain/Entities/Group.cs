@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SmartCharging.Domain.Entities
 {
     public class Group

@@ -64,5 +64,17 @@ namespace SmartCharging.Api.Controllers
             return await _groupDomain.Update(new Group() { Id = id, Name = group.Name, Amps = group.Amps });
         }
 
+        /// <summary>
+        /// Delete a specific group.
+        /// </summary>
+        /// <remarks>
+        /// <response code="200">The group has been deleted</response>  
+        /// <response code="404">The group does not exist</response>
+        /// <response code="500">Something went wrong</response>    
+        [HttpDelete("id")]
+        public async Task Delete(int id)
+        {
+            await _groupDomain.Delete(id);
+        }
     }
 }

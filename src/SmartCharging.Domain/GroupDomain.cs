@@ -17,6 +17,19 @@ namespace SmartCharging.Domain
             _groupService = groupService;
         }
 
+        public async Task Delete(int id)
+        {
+            try
+            {
+                await _groupService.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                _loggs.LogError(ex, "Something when wrong trying to delete a new group");
+                throw;
+            }
+        }
+
         public async Task<Group> Save(Group group)
         {
             try

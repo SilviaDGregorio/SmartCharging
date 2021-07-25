@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +30,10 @@ namespace SmartCharging.Api
                options.UseSqlServer(Configuration.GetConnectionString("DataBase")));
 
             services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<IChargeStationService, ChargeStationService>();
             services.AddScoped<IGroupDomain, GroupDomain>();
+            services.AddScoped<IChargeStationDomain, ChargeStationDomain>();
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

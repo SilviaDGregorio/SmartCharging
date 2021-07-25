@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartCharging.DataAccess;
 
 namespace SmartCharging.DataAccess.Migrations
 {
     [DbContext(typeof(SmartCharingDbContext))]
-    partial class SmartCharingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210725175127_ChargeStation")]
+    partial class ChargeStation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
