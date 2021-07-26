@@ -41,6 +41,18 @@ namespace SmartCharging.DataAccess
             return stationDb;
         }
 
+        public async Task<ChargeStation> GetByIdAndConnectors(int id, int groupId)
+        {
+            var stationDb = await _dbContext.ChargeStation.FirstOrDefaultAsync(x => x.Id == id && x.GroupId == groupId);
+            if (stationDb == null)
+            {
+                throw new KeyNotFoundException($"The charge station with id: {id} and groupId: {groupId} does not exist");
+            }
+            return stationDb;
+        }
+
+
+
         public async Task Delete(int groupId, int id)
         {
             var charge = await GetById(id, groupId);
