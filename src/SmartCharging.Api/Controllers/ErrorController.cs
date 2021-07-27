@@ -28,7 +28,7 @@ namespace SmartCharging.Api.Controllers
             return context.Error switch
             {
                 KeyNotFoundException => CreateProblem(context, statusCode: StatusCodes.Status404NotFound),
-                ConnectorsException => CreateProblem(context, statusCode: StatusCodes.Status409Conflict),
+                AmpsException => CreateProblem(context, statusCode: StatusCodes.Status409Conflict),
                 _ => CreateProblem(context, null)
             };
 

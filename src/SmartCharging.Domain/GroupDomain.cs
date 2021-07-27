@@ -47,6 +47,11 @@ namespace SmartCharging.Domain
         {
             try
             {
+                var groupDb = await _groupService.GetById(group.Id);
+                if (group.Amps < groupDb.UsedAmps)
+                {
+                    throw new AmpsException("The group can not be change, the amps are already in use");
+                }
                 return await _groupService.Update(group);
             }
             catch (Exception ex)

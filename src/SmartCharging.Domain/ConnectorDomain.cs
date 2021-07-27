@@ -100,7 +100,7 @@ namespace SmartCharging.Domain
             {
                 string message = $"The connector cannot be added because already reach the maximum of connectors: {NumberOfConnectors} for the charge station: {connector.ChargeStationId}";
                 _logger.LogError(message);
-                throw new ConnectorsException(message);
+                throw new AmpsException(message);
             }
             return connectorInactive;
         }
@@ -112,7 +112,7 @@ namespace SmartCharging.Domain
             {
                 string message = "The connector cannot be added/changed because already reach the maximum of amps for the group";
                 _logger.LogError(message);
-                throw new ConnectorsException(message);
+                throw new AmpsException(message);
             }
             return usedAmps;
         }
