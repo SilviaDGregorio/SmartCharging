@@ -44,6 +44,26 @@
              <response code="500">Something went wrong</response>  
         </member>
         <!-- Badly formed XML comment ignored for member "M:SmartCharging.Api.Controllers.ChargeStationsController.Delete(System.Int32,System.Int32)" -->
+        <member name="M:SmartCharging.Api.Controllers.ConnectorsController.Post(System.Int32,SmartCharging.Api.DTO.ConnectorDto)">
+             <summary>
+             Adds a specific connector.
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /ChargeStation/1/connectors
+                 {
+                    "name": "Connector 1"        
+                 }
+            
+             </remarks>
+             <param name="chargeStationId">Charge station id</param>
+             <param name="connector">The connector to be added</param>  
+             <returns>The connector created</returns>
+             <response code="200">Return the connector created</response>
+             <response code="400">The connector  is not valid</response>   
+             <response code="500">Something went wrong</response>   
+        </member>
         <member name="M:SmartCharging.Api.Controllers.GroupsController.Post(SmartCharging.Api.DTO.GroupDto)">
              <summary>
              Adds a specific group.

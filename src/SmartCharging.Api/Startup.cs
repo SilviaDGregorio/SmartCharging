@@ -31,9 +31,10 @@ namespace SmartCharging.Api
 
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<IChargeStationService, ChargeStationService>();
+            services.AddScoped<IConnectorService, ConnectorService>();
             services.AddScoped<IGroupDomain, GroupDomain>();
             services.AddScoped<IChargeStationDomain, ChargeStationDomain>();
-
+            services.AddScoped<IConnectorDomain, ConnectorDomain>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

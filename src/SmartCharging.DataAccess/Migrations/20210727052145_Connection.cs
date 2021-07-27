@@ -17,15 +17,14 @@ namespace SmartCharging.DataAccess.Migrations
                 name: "Connector",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     ChargeStationId = table.Column<int>(type: "int", nullable: false),
                     Amps = table.Column<float>(type: "real", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Connector", x => x.Id);
+                    table.PrimaryKey("PK_Connector", x => new { x.Id, x.ChargeStationId });
                     table.ForeignKey(
                         name: "FK_Connector_ChargeStation_ChargeStationId",
                         column: x => x.ChargeStationId,

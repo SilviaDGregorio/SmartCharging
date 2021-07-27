@@ -41,9 +41,10 @@ namespace SmartCharging.DataAccess.Migrations
             modelBuilder.Entity("SmartCharging.Domain.Entities.Connector", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    b.Property<int>("ChargeStationId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Active")
                         .ValueGeneratedOnAdd()
@@ -53,10 +54,7 @@ namespace SmartCharging.DataAccess.Migrations
                     b.Property<float>("Amps")
                         .HasColumnType("real");
 
-                    b.Property<int>("ChargeStationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("Id", "ChargeStationId");
 
                     b.HasIndex("ChargeStationId");
 

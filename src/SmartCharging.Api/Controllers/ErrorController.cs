@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SmartCharging.Domain;
 using System;
 using System.Collections.Generic;
 
@@ -27,6 +28,7 @@ namespace SmartCharging.Api.Controllers
             return context.Error switch
             {
                 KeyNotFoundException => CreateProblem(context, statusCode: StatusCodes.Status404NotFound),
+                ConnectorsException => CreateProblem(context, statusCode: StatusCodes.Status409Conflict),
                 _ => CreateProblem(context, null)
             };
 

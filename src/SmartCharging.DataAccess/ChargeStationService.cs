@@ -2,7 +2,6 @@
 using SmartCharging.Domain.Entities;
 using SmartCharging.Domain.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SmartCharging.DataAccess
@@ -41,12 +40,12 @@ namespace SmartCharging.DataAccess
             return stationDb;
         }
 
-        public async Task<ChargeStation> GetByIdAndConnectors(int id, int groupId)
+        public async Task<ChargeStation> GetWithConnectors(int id)
         {
-            var stationDb = await _dbContext.ChargeStation.FirstOrDefaultAsync(x => x.Id == id && x.GroupId == groupId);
+            var stationDb = await _dbContext.ChargeStation.Include(station => station.Connectors).Include(station => station.Group).FirstOrDefaultAsync(x => x.Id == id);
             if (stationDb == null)
             {
-                throw new KeyNotFoundException($"The charge station with id: {id} and groupId: {groupId} does not exist");
+                throw new KeyNotFoundException($"The charge station with id: {id} does not exist");
             }
             return stationDb;
         }

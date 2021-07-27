@@ -32,6 +32,7 @@ namespace SmartCharging.DataAccess
         {
             var groupDb = await GetById(group.Id);
             groupDb.Amps = group.Amps;
+            groupDb.UsedAmps = group.UsedAmps;
             groupDb.Name = group.Name;
             await _dbContext.SaveChangesAsync();
             return groupDb;

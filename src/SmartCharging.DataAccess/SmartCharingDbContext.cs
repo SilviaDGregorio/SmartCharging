@@ -15,6 +15,8 @@ namespace SmartCharging.DataAccess
             modelBuilder.Entity<Connector>()
                 .Property(b => b.Active)
                 .HasDefaultValue(1);
+            modelBuilder.Entity<Connector>()
+            .HasKey(c => new { c.Id, c.ChargeStationId });
         }
     }
 }

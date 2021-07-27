@@ -9,7 +9,7 @@ using SmartCharging.DataAccess;
 namespace SmartCharging.DataAccess.Migrations
 {
     [DbContext(typeof(SmartCharingDbContext))]
-    [Migration("20210726203403_Connection")]
+    [Migration("20210727052145_Connection")]
     partial class Connection
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,9 +43,10 @@ namespace SmartCharging.DataAccess.Migrations
             modelBuilder.Entity("SmartCharging.Domain.Entities.Connector", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    b.Property<int>("ChargeStationId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Active")
                         .ValueGeneratedOnAdd()
@@ -55,10 +56,7 @@ namespace SmartCharging.DataAccess.Migrations
                     b.Property<float>("Amps")
                         .HasColumnType("real");
 
-                    b.Property<int>("ChargeStationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("Id", "ChargeStationId");
 
                     b.HasIndex("ChargeStationId");
 
