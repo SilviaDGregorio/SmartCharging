@@ -2,6 +2,7 @@
 using SmartCharging.Domain.Entities;
 using SmartCharging.Domain.Interfaces;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SmartCharging.Domain
@@ -23,7 +24,13 @@ namespace SmartCharging.Domain
         {
             try
             {
+                var station = await _chargeStationService.GetWithConnectors(id);
+                var sumAmps = (float)(station.Connectors?.Sum(x => x.Amps));
+                var group = station.Group;
+                group.UsedAmps -= sumAmps;
                 await _chargeStationService.Delete(groupId, id);
+                await _groupService.Update(group);
+
             }
             catch (Exception ex)
             {
