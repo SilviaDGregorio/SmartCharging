@@ -38,6 +38,7 @@ namespace SmartCharging.Domain
             else
             {
                 connector.Id = numberOfConnectors + 1;
+                connector.Active = true;
                 await _connectorService.Save(connector);
             }
 
@@ -49,13 +50,11 @@ namespace SmartCharging.Domain
         {
             var connectorInactive = chargeStation.Connectors.FirstOrDefault(x => x.Active == false);
             if (connectorInactive == null)
-                if (chargeStation.Connectors.Count(x => x.Active == true) == NumberOfConnectors)
-                {
-                    string message = $"The connector cannot be added because already reach the maximum of connectors: {NumberOfConnectors} for the charge station: {connector.ChargeStationId}";
-                    _logger.LogError($"The connector cannot be added because already reach the maximum of connectors: {NumberOfConnectors} for the charge station: {connector.ChargeStationId}");
-                    throw new ConnectorsException(message);
-                }
-
+            {
+                string message = $"The connector cannot be added because already reach the maximum of connectors: {NumberOfConnectors} for the charge station: {connector.ChargeStationId}";
+                _logger.LogError($"The connector cannot be added because already reach the maximum of connectors: {NumberOfConnectors} for the charge station: {connector.ChargeStationId}");
+                throw new ConnectorsException(message);
+            }
             return connectorInactive;
         }
 
@@ -64,8 +63,8 @@ namespace SmartCharging.Domain
             var usedAmps = chargeStation.Group.UsedAmps + connector.Amps;
             if (usedAmps > chargeStation.Group.Amps)
             {
-                string message = $"The connector cannot be added because already reach the maximum of amps for the group";
-                _logger.LogError($"The connector cannot be added because already reach the maximum of amps for the group");
+                string message = "The connector cannot be added because already reach the maximum of amps for the group";
+                _logger.LogError("The connector cannot be added because already reach the maximum of amps for the group");
                 throw new ConnectorsException(message);
             }
             return usedAmps;
