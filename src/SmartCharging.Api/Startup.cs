@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using SmartCharging.Api.Mapper;
 using SmartCharging.DataAccess;
 using SmartCharging.Domain;
 using SmartCharging.Domain.Interfaces;
@@ -36,6 +37,7 @@ namespace SmartCharging.Api
             services.AddScoped<IChargeStationDomain, ChargeStationDomain>();
             services.AddScoped<IConnectorDomain, ConnectorDomain>();
 
+            services.AddAutoMapper(typeof(OrganizationProfile));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

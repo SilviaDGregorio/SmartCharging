@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SmartCharging.Api.DTO;
 using SmartCharging.Domain.Entities;
 using SmartCharging.Domain.Interfaces;
@@ -11,9 +12,12 @@ namespace SmartCharging.Api.Controllers
     public class ChargeStationsController : ControllerBase
     {
         private readonly IChargeStationDomain _stationDomain;
-        public ChargeStationsController(IChargeStationDomain stationDomain)
+        private readonly IMapper _mapper;
+
+        public ChargeStationsController(IChargeStationDomain stationDomain, IMapper mapper)
         {
             _stationDomain = stationDomain;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -35,9 +39,11 @@ namespace SmartCharging.Api.Controllers
         /// <response code="400">The charge station  is not valid</response>   
         /// <response code="500">Something went wrong</response>   
         [HttpPost]
-        public async Task<ChargeStation> Post(int groupId, ChargeStationDto chargeStation)
+        public async Task<ChargeStationReturn> Post(int groupId, ChargeStationDto chargeStation)
         {
-            return await _stationDomain.Save(new ChargeStation() { Name = chargeStation.Name, GroupId = groupId });
+            var chargeStationEntity = _mapper.Map<ChargeStation>(chargeStation);
+            chargeStationEntity.GroupId = groupId;
+            return _mapper.Map<ChargeStationReturn>(await _stationDomain.Save(chargeStationEntity));
         }
 
         /// <summary>
@@ -58,9 +64,12 @@ namespace SmartCharging.Api.Controllers
         /// <response code="404">The chargeStation does not exist</response>
         /// <response code="500">Something went wrong</response>  
         [HttpPut("{id}")]
-        public async Task<ChargeStation> Put(int groupId, int id, ChargeStationDto chargeStation)
+        public async Task<ChargeStationReturn> Put(int groupId, int id, ChargeStationDto chargeStation)
         {
-            return await _stationDomain.Update(new ChargeStation() { Id = id, Name = chargeStation.Name, GroupId = groupId });
+            var chargeStationEntity = _mapper.Map<ChargeStation>(chargeStation);
+            chargeStationEntity.GroupId = groupId;
+            chargeStationEntity.Id = id;
+            return _mapper.Map<ChargeStationReturn>(await _stationDomain.Update(chargeStationEntity));
         }
 
         /// <summary>

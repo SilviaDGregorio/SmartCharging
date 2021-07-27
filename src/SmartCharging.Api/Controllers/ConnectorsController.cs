@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SmartCharging.Api.DTO;
 using SmartCharging.Domain.Entities;
 using SmartCharging.Domain.Interfaces;
@@ -11,9 +12,12 @@ namespace SmartCharging.Api.Controllers
     public class ConnectorsController : ControllerBase
     {
         private readonly IConnectorDomain _connectorDomain;
-        public ConnectorsController(IConnectorDomain connectorDomain)
+        private readonly IMapper _mapper;
+
+        public ConnectorsController(IConnectorDomain connectorDomain, IMapper mapper)
         {
             _connectorDomain = connectorDomain;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -35,9 +39,11 @@ namespace SmartCharging.Api.Controllers
         /// <response code="400">The connector  is not valid</response>   
         /// <response code="500">Something went wrong</response>   
         [HttpPost]
-        public async Task<Connector> Post(int chargeStationId, ConnectorDto connector)
+        public async Task<ConnectorReturn> Post(int chargeStationId, ConnectorDto connector)
         {
-            return await _connectorDomain.Save(new Connector() { ChargeStationId = chargeStationId, Amps = connector.Amps });
+            var connectorEntity = _mapper.Map<Connector>(connector);
+            connectorEntity.ChargeStationId = chargeStationId;
+            return _mapper.Map<ConnectorReturn>(await _connectorDomain.Save(connectorEntity));
         }
     }
 }
