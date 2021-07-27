@@ -71,5 +71,18 @@ namespace SmartCharging.Api.Controllers
             connectorEntity.Id = id;
             return _mapper.Map<ConnectorReturn>(await _connectorDomain.Update(connectorEntity));
         }
+
+        /// <summary>
+        /// Delete a specific connector.
+        /// </summary>
+        /// <remarks>
+        /// <response code="200">The connector has been deleted</response>  
+        /// <response code="404">The connector does not exist</response>
+        /// <response code="500">Something went wrong</response>    
+        [HttpDelete("{id}")]
+        public async Task Delete(int chargeStationId, int id)
+        {
+            await _connectorDomain.Delete(chargeStationId, id);
+        }
     }
 }

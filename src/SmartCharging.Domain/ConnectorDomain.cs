@@ -51,7 +51,7 @@ namespace SmartCharging.Domain
             try
             {
                 var chargeStation = await _chargeStationService.GetWithConnectors(connector.ChargeStationId);
-                var connectorDb = GetConnector(connector, chargeStation);
+                var connectorDb = GetConnector(connector.Id, chargeStation);
                 var difference = connectorDb.Amps - connector.Amps;
 
                 if (difference > 0)
@@ -70,6 +70,25 @@ namespace SmartCharging.Domain
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Something when wrong trying to update a new connector");
+                throw;
+            }
+        }
+
+        public async Task Delete(int chargeStationId, int id)
+        {
+            try
+            {
+                var chargeStation = await _chargeStationService.GetWithConnectors(chargeStationId);
+                var connectorDb = GetConnector(id, chargeStation);
+                connectorDb.Active = false;
+                chargeStation.Group.UsedAmps -= connectorDb.Amps;
+                await _connectorService.Update(connectorDb);
+                await _groupService.Update(chargeStation.Group);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Something when wrong trying to delete a new connector");
                 throw;
             }
         }
@@ -98,16 +117,18 @@ namespace SmartCharging.Domain
             return usedAmps;
         }
 
-        private Connector GetConnector(Connector connector, ChargeStation chargeStation)
+        private Connector GetConnector(int id, ChargeStation chargeStation)
         {
-            var connectorDB = chargeStation.Connectors.First(x => x.Id == connector.Id);
+            var connectorDB = chargeStation.Connectors.First(x => x.Id == id);
             if (connectorDB == null)
             {
-                string message = $"The connector with id: {connector.Id} and charge station: {chargeStation.Id} does not exist";
+                string message = $"The connector with id: {id} and charge station: {chargeStation.Id} does not exist";
                 _logger.LogError(message);
                 throw new KeyNotFoundException(message);
             }
             return connectorDB;
         }
+
+
     }
 }

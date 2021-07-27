@@ -292,5 +292,39 @@ namespace SmartCharging.Domain.Test
             response.Should().BeEquivalentTo(connector);
         }
         #endregion
+
+        #region delete
+        [Fact]
+        public async Task Deleting_a_connector_Remove_group_usedAmps()
+        {
+            //Arrange
+
+            ChargeStation chargeStation = new ChargeStation()
+            {
+                Group = new Group()
+                {
+                    Amps = 2,
+                    UsedAmps = 1
+                },
+                Connectors = new List<Connector>()
+                {
+                    new Connector()
+                    {
+                        Amps = 1,
+                        Id = 5
+                    }
+                }
+            };
+
+            _chargeStationService.GetWithConnectors(1).Returns(chargeStation);
+
+            //Act
+            await _connectorDomain.Delete(1, 5);
+
+            //Assert
+            await _connectorService.Received().Update(Arg.Is<Connector>(x => x.Active == false && x.Id == 5));
+            await _groupService.Received().Update(Arg.Is<Group>(x => x.UsedAmps == 0));
+        }
+        #endregion
     }
 }
