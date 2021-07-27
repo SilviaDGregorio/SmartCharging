@@ -54,11 +54,11 @@ namespace SmartCharging.Api.Controllers
         ///
         ///     Put /Groups/1/chargeStations/1
         ///     {
-        ///        "name": "Group 1"
+        ///        "name": "Station 1"
         ///     }
         ///
         /// </remarks>
-        /// <returns>The group updated</returns>
+        /// <returns>The charge station updated</returns>
         /// <response code="200">The chargeStation updated</response>
         /// <response code="400">The chargeStation is not valid</response>    
         /// <response code="404">The chargeStation does not exist</response>

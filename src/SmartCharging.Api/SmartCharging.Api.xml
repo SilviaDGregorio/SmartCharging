@@ -33,11 +33,11 @@
             
                  Put /Groups/1/chargeStations/1
                  {
-                    "name": "Group 1"
+                    "name": "Station 1"
                  }
             
              </remarks>
-             <returns>The group updated</returns>
+             <returns>The charge station updated</returns>
              <response code="200">The chargeStation updated</response>
              <response code="400">The chargeStation is not valid</response>    
              <response code="404">The chargeStation does not exist</response>
@@ -53,7 +53,7 @@
             
                  POST /ChargeStation/1/connectors
                  {
-                    "name": "Connector 1"        
+                    "amps": 1       
                  }
             
              </remarks>
@@ -63,6 +63,25 @@
              <response code="200">Return the connector created</response>
              <response code="400">The connector  is not valid</response>   
              <response code="500">Something went wrong</response>   
+        </member>
+        <member name="M:SmartCharging.Api.Controllers.ConnectorsController.Put(System.Int32,System.Int32,SmartCharging.Api.DTO.ConnectorDto)">
+             <summary>
+             Update a specific connector.
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Put /ChargeStation/1/connectors/1
+                 {
+                    "amps": 1
+                 }
+            
+             </remarks>
+             <returns>The connector updated</returns>
+             <response code="200">The connector updated</response>
+             <response code="400">The connector is not valid</response>    
+             <response code="404">The connector does not exist</response>
+             <response code="500">Something went wrong</response>  
         </member>
         <member name="M:SmartCharging.Api.Controllers.GroupsController.Post(SmartCharging.Api.DTO.GroupDto)">
              <summary>

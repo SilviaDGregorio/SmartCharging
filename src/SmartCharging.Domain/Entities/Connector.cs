@@ -5,6 +5,6 @@
         public int Id { get; set; }
         public int ChargeStationId { get; set; }
         public float Amps { get; set; }
-        public bool Active { get; set; }
+        public bool Active { get; set; } = true;
     }
 }

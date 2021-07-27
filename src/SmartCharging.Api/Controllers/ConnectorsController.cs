@@ -28,7 +28,7 @@ namespace SmartCharging.Api.Controllers
         ///
         ///     POST /ChargeStation/1/connectors
         ///     {
-        ///        "name": "Connector 1"        
+        ///        "amps": 1       
         ///     }
         ///
         /// </remarks>
@@ -44,6 +44,32 @@ namespace SmartCharging.Api.Controllers
             var connectorEntity = _mapper.Map<Connector>(connector);
             connectorEntity.ChargeStationId = chargeStationId;
             return _mapper.Map<ConnectorReturn>(await _connectorDomain.Save(connectorEntity));
+        }
+
+        /// <summary>
+        /// Update a specific connector.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Put /ChargeStation/1/connectors/1
+        ///     {
+        ///        "amps": 1
+        ///     }
+        ///
+        /// </remarks>
+        /// <returns>The connector updated</returns>
+        /// <response code="200">The connector updated</response>
+        /// <response code="400">The connector is not valid</response>    
+        /// <response code="404">The connector does not exist</response>
+        /// <response code="500">Something went wrong</response>  
+        [HttpPut("{id}")]
+        public async Task<ConnectorReturn> Put(int chargeStationId, int id, ConnectorDto connector)
+        {
+            var connectorEntity = _mapper.Map<Connector>(connector);
+            connectorEntity.ChargeStationId = chargeStationId;
+            connectorEntity.Id = id;
+            return _mapper.Map<ConnectorReturn>(await _connectorDomain.Update(connectorEntity));
         }
     }
 }

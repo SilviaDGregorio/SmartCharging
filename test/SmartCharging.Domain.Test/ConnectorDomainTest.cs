@@ -26,6 +26,7 @@ namespace SmartCharging.Domain.Test
             _connectorDomain = new ConnectorDomain(_connectorService, _logger, _chargeStationService, _groupService);
         }
 
+        #region Add
         [Fact]
         public async Task Adding_a_connector_On_a_group_without_amps_left_Recieve_an_error()
         {
@@ -51,7 +52,7 @@ namespace SmartCharging.Domain.Test
             var exception = await Assert.ThrowsAsync<ConnectorsException>(() => _connectorDomain.Save(connector));
 
             //Assert
-            exception.Message.Should().Be("The connector cannot be added because already reach the maximum of amps for the group");
+            exception.Message.Should().Be("The connector cannot be added/changed because already reach the maximum of amps for the group");
         }
 
         [Fact]
@@ -171,5 +172,125 @@ namespace SmartCharging.Domain.Test
             await _groupService.Received().Update(Arg.Is<Group>(x => x.UsedAmps == 1));
             response.Should().BeEquivalentTo(connectorExpected);
         }
+        #endregion
+        #region Update
+
+        [Fact]
+        public async Task Updating_a_connector_On_a_group_without_amps_left_Recieve_an_error()
+        {
+            //Arrange
+            Connector connector = new Connector()
+            {
+                Amps = 2,
+                ChargeStationId = 1,
+                Id = 5
+            };
+
+            ChargeStation chargeStation = new ChargeStation()
+            {
+                Group = new Group()
+                {
+                    Amps = 1,
+                    UsedAmps = 1
+                },
+                Connectors = new List<Connector>()
+                {
+                    new Connector()
+                    {
+                        Amps = 1,
+                        Id = 5
+                    }
+                }
+            };
+
+            _chargeStationService.GetWithConnectors(connector.ChargeStationId).Returns(chargeStation);
+
+            //Act
+            var exception = await Assert.ThrowsAsync<ConnectorsException>(() => _connectorDomain.Update(connector));
+
+            //Assert
+            exception.Message.Should().Be("The connector cannot be added/changed because already reach the maximum of amps for the group");
+        }
+
+        [Fact]
+        public async Task Updating_a_connector_to_remove_amps_Updated()
+        {
+            //Arrange
+            Connector connector = new Connector()
+            {
+                Amps = 1,
+                ChargeStationId = 1,
+                Id = 5,
+                Active = true
+            };
+
+            ChargeStation chargeStation = new ChargeStation()
+            {
+                Group = new Group()
+                {
+                    Amps = 2,
+                    UsedAmps = 2
+                },
+                Connectors = new List<Connector>()
+                {
+                    new Connector()
+                    {
+                        Amps = 2,
+                        Id = 5
+                    }
+                }
+            };
+
+            _chargeStationService.GetWithConnectors(connector.ChargeStationId).Returns(chargeStation);
+            _connectorService.Update(connector).Returns(connector);
+
+            //Act
+            var response = await _connectorDomain.Update(connector);
+
+            //Assert
+            await _groupService.Received().Update(Arg.Is<Group>(x => x.UsedAmps == 1));
+            response.Should().BeEquivalentTo(connector);
+        }
+
+        [Fact]
+        public async Task Updating_a_connector_to_add_amps_Group_has_left_Updated()
+        {
+            //Arrange
+            Connector connector = new Connector()
+            {
+                Amps = 2,
+                ChargeStationId = 1,
+                Id = 5,
+                Active = true
+            };
+
+            ChargeStation chargeStation = new ChargeStation()
+            {
+                Group = new Group()
+                {
+                    Amps = 2,
+                    UsedAmps = 1
+                },
+                Connectors = new List<Connector>()
+                {
+                    new Connector()
+                    {
+                        Amps = 1,
+                        Id = 5
+                    }
+                }
+            };
+
+            _chargeStationService.GetWithConnectors(connector.ChargeStationId).Returns(chargeStation);
+            _connectorService.Update(connector).Returns(connector);
+
+            //Act
+            var response = await _connectorDomain.Update(connector);
+
+            //Assert
+            await _groupService.Received().Update(Arg.Is<Group>(x => x.UsedAmps == 2));
+            response.Should().BeEquivalentTo(connector);
+        }
+        #endregion
     }
 }
