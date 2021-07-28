@@ -98,7 +98,7 @@ namespace SmartCharging.Domain
             var connectorInactive = chargeStation.Connectors.FirstOrDefault(x => x.Active == false);
             if (connectorInactive == null)
             {
-                string message = $"The connector cannot be added because already reach the maximum of connectors: {NumberOfConnectors} for the charge station: {connector.ChargeStationId}";
+                string message = $"The connector cannot be added because the maximum of connectors: {NumberOfConnectors} for the charge station: {connector.ChargeStationId} has already been reached";
                 _logger.LogError(message);
                 throw new AmpsException(message);
             }
@@ -110,7 +110,7 @@ namespace SmartCharging.Domain
             var usedAmps = chargeStation.Group.UsedAmps + ampsToAdd;
             if (usedAmps > chargeStation.Group.Amps)
             {
-                string message = "The connector cannot be added/changed because already reach the maximum of amps for the group";
+                string message = "The connector cannot be added/changed because the maximum of amps for the group has already been reached";
                 _logger.LogError(message);
                 throw new AmpsException(message);
             }

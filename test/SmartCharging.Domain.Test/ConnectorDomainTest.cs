@@ -55,7 +55,7 @@ namespace SmartCharging.Domain.Test
             var exception = await Assert.ThrowsAsync<AmpsException>(() => _connectorDomain.Save(connector));
 
             //Assert
-            exception.Message.Should().Be("The connector cannot be added/changed because already reach the maximum of amps for the group");
+            exception.Message.Should().Be("The connector cannot be added/changed because the maximum of amps for the group has already been reached");
         }
 
         [Fact]
@@ -91,7 +91,8 @@ namespace SmartCharging.Domain.Test
             var exception = await Assert.ThrowsAsync<AmpsException>(() => _connectorDomain.Save(connector));
 
             //Assert
-            exception.Message.Should().Be("The connector cannot be added because already reach the maximum of connectors: 5 for the charge station: 16995826-f123-46e3-9c6e-e5164ba2b40d");
+
+            exception.Message.Should().Be("The connector cannot be added because the maximum of connectors: 5 for the charge station: 16995826-f123-46e3-9c6e-e5164ba2b40d has already been reached");
         }
 
         [Fact]
@@ -212,7 +213,7 @@ namespace SmartCharging.Domain.Test
             var exception = await Assert.ThrowsAsync<AmpsException>(() => _connectorDomain.Update(connector));
 
             //Assert
-            exception.Message.Should().Be("The connector cannot be added/changed because already reach the maximum of amps for the group");
+            exception.Message.Should().Be("The connector cannot be added/changed because the maximum of amps for the group has already been reached");
         }
 
         [Fact]
