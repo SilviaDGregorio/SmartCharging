@@ -1,4 +1,5 @@
 ﻿using SmartCharging.Domain.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace SmartCharging.Domain.Interfaces
@@ -7,6 +8,6 @@ namespace SmartCharging.Domain.Interfaces
     {
         Task<Connector> Save(Connector connector);
         Task<Connector> Update(Connector connectorEntity);
-        Task Delete(int chargeStationId, int id);
+        Task Delete(Guid chargeStationId, int id);
     }
 }

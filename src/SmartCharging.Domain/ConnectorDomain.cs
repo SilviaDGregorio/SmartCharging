@@ -74,7 +74,7 @@ namespace SmartCharging.Domain
             }
         }
 
-        public async Task Delete(int chargeStationId, int id)
+        public async Task Delete(Guid chargeStationId, int id)
         {
             try
             {

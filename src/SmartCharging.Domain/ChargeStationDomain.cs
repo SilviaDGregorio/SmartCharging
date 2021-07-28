@@ -20,7 +20,7 @@ namespace SmartCharging.Domain
             _chargeStationService = chargeStationService;
         }
 
-        public async Task Delete(int groupId, int id)
+        public async Task Delete(Guid groupId, Guid id)
         {
             try
             {

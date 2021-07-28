@@ -1,5 +1,6 @@
 ﻿using SmartCharging.Domain.Entities;
 using SmartCharging.Domain.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace SmartCharging.DataAccess
             _dbContext = dbContext;
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(Guid id)
         {
             var group = await GetById(id);
             _dbContext.Groups.Remove(group);
@@ -38,7 +39,7 @@ namespace SmartCharging.DataAccess
             return groupDb;
         }
 
-        public async Task<Group> GetById(int id)
+        public async Task<Group> GetById(Guid id)
         {
             var groupDb = await _dbContext.Groups.FindAsync(id);
             if (groupDb == null)

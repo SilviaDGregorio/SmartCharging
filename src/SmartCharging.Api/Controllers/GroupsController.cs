@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartCharging.Api.DTO;
 using SmartCharging.Domain.Entities;
 using SmartCharging.Domain.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace SmartCharging.Api.Controllers
@@ -50,7 +51,7 @@ namespace SmartCharging.Api.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     Put /Groups/1
+        ///     Put /Groups/4CBBF94A-C443-4C99-C666-08D951EDB213
         ///     {
         ///        "name": "Group 1",
         ///        "amps": 1.2 //Should be greater than 0
@@ -63,7 +64,7 @@ namespace SmartCharging.Api.Controllers
         /// <response code="404">The group does not exist</response>
         /// <response code="500">Something went wrong</response>    
         [HttpPut("id")]
-        public async Task<GroupReturn> Put(int id, GroupDto group)
+        public async Task<GroupReturn> Put(Guid id, GroupDto group)
         {
             var groupEntity = _mapper.Map<Group>(group);
             groupEntity.Id = id;
@@ -78,7 +79,7 @@ namespace SmartCharging.Api.Controllers
         /// <response code="404">The group does not exist</response>
         /// <response code="500">Something went wrong</response>    
         [HttpDelete("id")]
-        public async Task Delete(int id)
+        public async Task Delete(Guid id)
         {
             await _groupDomain.Delete(id);
         }

@@ -4,34 +4,34 @@
         <name>SmartCharging.Api</name>
     </assembly>
     <members>
-        <member name="M:SmartCharging.Api.Controllers.ChargeStationsController.Post(System.Int32,SmartCharging.Api.DTO.ChargeStationDto)">
+        <member name="M:SmartCharging.Api.Controllers.ChargeStationsController.Post(System.Guid,SmartCharging.Api.DTO.ChargeStationDto)">
              <summary>
              Adds a specific charge station.
              </summary>
              <remarks>
              Sample request:
             
-                 POST /Groups/1/chargeStations
+                 POST /Groups/4CBBF94A-C443-4C99-C666-08D951EDB213/chargeStations
                  {
                     "name": "Station 1"        
                  }
             
              </remarks>
              <param name="groupId">Group id</param>
-             <param name="ChargeStationDto">The chargeStation to be added</param>  
+             <param name="chargeStation">The chargeStation to be added</param>  
              <returns>The charge station created</returns>
              <response code="200">Return the charge station created</response>
              <response code="400">The charge station  is not valid</response>   
              <response code="500">Something went wrong</response>   
         </member>
-        <member name="M:SmartCharging.Api.Controllers.ChargeStationsController.Put(System.Int32,System.Int32,SmartCharging.Api.DTO.ChargeStationDto)">
+        <member name="M:SmartCharging.Api.Controllers.ChargeStationsController.Put(System.Guid,System.Guid,SmartCharging.Api.DTO.ChargeStationDto)">
              <summary>
              Update a specific charge station.
              </summary>
              <remarks>
              Sample request:
             
-                 Put /Groups/1/chargeStations/1
+                 Put /Groups/4CBBF94A-C443-4C99-C666-08D951EDB213/chargeStations/4CBBF94A-C443-4C99-C666-08D951EDB217
                  {
                     "name": "Station 1"
                  }
@@ -43,15 +43,15 @@
              <response code="404">The chargeStation does not exist</response>
              <response code="500">Something went wrong</response>  
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SmartCharging.Api.Controllers.ChargeStationsController.Delete(System.Int32,System.Int32)" -->
-        <member name="M:SmartCharging.Api.Controllers.ConnectorsController.Post(System.Int32,SmartCharging.Api.DTO.ConnectorDto)">
+        <!-- Badly formed XML comment ignored for member "M:SmartCharging.Api.Controllers.ChargeStationsController.Delete(System.Guid,System.Guid)" -->
+        <member name="M:SmartCharging.Api.Controllers.ConnectorsController.Post(System.Guid,SmartCharging.Api.DTO.ConnectorDto)">
              <summary>
              Adds a specific connector.
              </summary>
              <remarks>
              Sample request:
             
-                 POST /ChargeStation/1/connectors
+                 POST /ChargeStation/4CBBF94A-C443-4C99-C666-08D951EDB213/connectors
                  {
                     "amps": 1       
                  }
@@ -64,14 +64,14 @@
              <response code="400">The connector  is not valid</response>   
              <response code="500">Something went wrong</response>   
         </member>
-        <member name="M:SmartCharging.Api.Controllers.ConnectorsController.Put(System.Int32,System.Int32,SmartCharging.Api.DTO.ConnectorDto)">
+        <member name="M:SmartCharging.Api.Controllers.ConnectorsController.Put(System.Guid,System.Int32,SmartCharging.Api.DTO.ConnectorDto)">
              <summary>
              Update a specific connector.
              </summary>
              <remarks>
              Sample request:
             
-                 Put /ChargeStation/1/connectors/1
+                 Put /ChargeStation/4CBBF94A-C443-4C99-C666-08D951EDB213/connectors/1
                  {
                     "amps": 1
                  }
@@ -83,7 +83,7 @@
              <response code="404">The connector does not exist</response>
              <response code="500">Something went wrong</response>  
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SmartCharging.Api.Controllers.ConnectorsController.Delete(System.Int32,System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:SmartCharging.Api.Controllers.ConnectorsController.Delete(System.Guid,System.Int32)" -->
         <member name="M:SmartCharging.Api.Controllers.GroupsController.Post(SmartCharging.Api.DTO.GroupDto)">
              <summary>
              Adds a specific group.
@@ -104,14 +104,14 @@
              <response code="400">The group is not valid</response>   
              <response code="500">Something went wrong</response>   
         </member>
-        <member name="M:SmartCharging.Api.Controllers.GroupsController.Put(System.Int32,SmartCharging.Api.DTO.GroupDto)">
+        <member name="M:SmartCharging.Api.Controllers.GroupsController.Put(System.Guid,SmartCharging.Api.DTO.GroupDto)">
              <summary>
              Update a specific group.
              </summary>
              <remarks>
              Sample request:
             
-                 Put /Groups/1
+                 Put /Groups/4CBBF94A-C443-4C99-C666-08D951EDB213
                  {
                     "name": "Group 1",
                     "amps": 1.2 //Should be greater than 0
@@ -124,7 +124,7 @@
              <response code="404">The group does not exist</response>
              <response code="500">Something went wrong</response>    
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SmartCharging.Api.Controllers.GroupsController.Delete(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:SmartCharging.Api.Controllers.GroupsController.Delete(System.Guid)" -->
         <member name="M:SmartCharging.Api.DTO.RequiredGreaterThanZeroValidation.IsValid(System.Object)">
             <param name="value">The float value of the selection</param>
             <returns>True if value is greater than zero</returns>

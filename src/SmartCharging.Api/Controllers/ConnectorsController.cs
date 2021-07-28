@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartCharging.Api.DTO;
 using SmartCharging.Domain.Entities;
 using SmartCharging.Domain.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace SmartCharging.Api.Controllers
@@ -26,7 +27,7 @@ namespace SmartCharging.Api.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST /ChargeStation/1/connectors
+        ///     POST /ChargeStation/4CBBF94A-C443-4C99-C666-08D951EDB213/connectors
         ///     {
         ///        "amps": 1       
         ///     }
@@ -39,7 +40,7 @@ namespace SmartCharging.Api.Controllers
         /// <response code="400">The connector  is not valid</response>   
         /// <response code="500">Something went wrong</response>   
         [HttpPost]
-        public async Task<ConnectorReturn> Post(int chargeStationId, ConnectorDto connector)
+        public async Task<ConnectorReturn> Post(Guid chargeStationId, ConnectorDto connector)
         {
             var connectorEntity = _mapper.Map<Connector>(connector);
             connectorEntity.ChargeStationId = chargeStationId;
@@ -52,7 +53,7 @@ namespace SmartCharging.Api.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     Put /ChargeStation/1/connectors/1
+        ///     Put /ChargeStation/4CBBF94A-C443-4C99-C666-08D951EDB213/connectors/1
         ///     {
         ///        "amps": 1
         ///     }
@@ -64,7 +65,7 @@ namespace SmartCharging.Api.Controllers
         /// <response code="404">The connector does not exist</response>
         /// <response code="500">Something went wrong</response>  
         [HttpPut("{id}")]
-        public async Task<ConnectorReturn> Put(int chargeStationId, int id, ConnectorDto connector)
+        public async Task<ConnectorReturn> Put(Guid chargeStationId, int id, ConnectorDto connector)
         {
             var connectorEntity = _mapper.Map<Connector>(connector);
             connectorEntity.ChargeStationId = chargeStationId;
@@ -80,7 +81,7 @@ namespace SmartCharging.Api.Controllers
         /// <response code="404">The connector does not exist</response>
         /// <response code="500">Something went wrong</response>    
         [HttpDelete("{id}")]
-        public async Task Delete(int chargeStationId, int id)
+        public async Task Delete(Guid chargeStationId, int id)
         {
             await _connectorDomain.Delete(chargeStationId, id);
         }

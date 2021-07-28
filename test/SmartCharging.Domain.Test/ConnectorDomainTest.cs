@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using SmartCharging.Domain.Entities;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System;
 
 namespace SmartCharging.Domain.Test
 {
@@ -16,9 +17,11 @@ namespace SmartCharging.Domain.Test
         private readonly IChargeStationService _chargeStationService;
         private readonly IGroupService _groupService;
         private readonly ConnectorDomain _connectorDomain;
+        private readonly Guid _guid;
 
         public ConnectorDomainTest()
         {
+            _guid = Guid.Parse("16995826-f123-46e3-9c6e-e5164ba2b40d");
             _chargeStationService = Substitute.For<IChargeStationService>();
             _logger = Substitute.For<ILogger<ChargeStationDomain>>();
             _groupService = Substitute.For<IGroupService>();
@@ -34,7 +37,7 @@ namespace SmartCharging.Domain.Test
             Connector connector = new Connector()
             {
                 Amps = 1,
-                ChargeStationId = 1
+                ChargeStationId = _guid
             };
 
             ChargeStation chargeStation = new ChargeStation()
@@ -62,7 +65,7 @@ namespace SmartCharging.Domain.Test
             Connector connector = new Connector()
             {
                 Amps = 1,
-                ChargeStationId = 1
+                ChargeStationId = _guid
             };
 
             ChargeStation chargeStation = new ChargeStation()
@@ -88,7 +91,7 @@ namespace SmartCharging.Domain.Test
             var exception = await Assert.ThrowsAsync<AmpsException>(() => _connectorDomain.Save(connector));
 
             //Assert
-            exception.Message.Should().Be("The connector cannot be added because already reach the maximum of connectors: 5 for the charge station: 1");
+            exception.Message.Should().Be("The connector cannot be added because already reach the maximum of connectors: 5 for the charge station: 16995826-f123-46e3-9c6e-e5164ba2b40d");
         }
 
         [Fact]
@@ -98,13 +101,13 @@ namespace SmartCharging.Domain.Test
             Connector connector = new Connector()
             {
                 Amps = 1,
-                ChargeStationId = 1
+                ChargeStationId = _guid
             };
 
             Connector connectorExpected = new Connector()
             {
                 Amps = 1,
-                ChargeStationId = 1,
+                ChargeStationId = _guid,
                 Id = 3,
                 Active = true
             };
@@ -143,13 +146,13 @@ namespace SmartCharging.Domain.Test
             Connector connector = new Connector()
             {
                 Amps = 1,
-                ChargeStationId = 1
+                ChargeStationId = _guid
             };
 
             Connector connectorExpected = new Connector()
             {
                 Amps = 1,
-                ChargeStationId = 1,
+                ChargeStationId = _guid,
                 Id = 1,
                 Active = true
             };
@@ -182,7 +185,7 @@ namespace SmartCharging.Domain.Test
             Connector connector = new Connector()
             {
                 Amps = 2,
-                ChargeStationId = 1,
+                ChargeStationId = _guid,
                 Id = 5
             };
 
@@ -219,7 +222,7 @@ namespace SmartCharging.Domain.Test
             Connector connector = new Connector()
             {
                 Amps = 1,
-                ChargeStationId = 1,
+                ChargeStationId = _guid,
                 Id = 5,
                 Active = true
             };
@@ -259,7 +262,7 @@ namespace SmartCharging.Domain.Test
             Connector connector = new Connector()
             {
                 Amps = 2,
-                ChargeStationId = 1,
+                ChargeStationId = _guid,
                 Id = 5,
                 Active = true
             };
@@ -316,10 +319,10 @@ namespace SmartCharging.Domain.Test
                 }
             };
 
-            _chargeStationService.GetWithConnectors(1).Returns(chargeStation);
+            _chargeStationService.GetWithConnectors(_guid).Returns(chargeStation);
 
             //Act
-            await _connectorDomain.Delete(1, 5);
+            await _connectorDomain.Delete(_guid, 5);
 
             //Assert
             await _connectorService.Received().Update(Arg.Is<Connector>(x => x.Active == false && x.Id == 5));

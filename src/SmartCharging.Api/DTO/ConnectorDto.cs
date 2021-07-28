@@ -2,6 +2,7 @@
 {
     public class ConnectorDto
     {
+        [RequiredGreaterThanZeroValidation()]
         public float Amps { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartCharging.Domain.Entities;
 using SmartCharging.Domain.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -30,7 +31,7 @@ namespace SmartCharging.DataAccess
             return chargeStationDb;
         }
 
-        public async Task<ChargeStation> GetById(int id, int groupId)
+        public async Task<ChargeStation> GetById(Guid id, Guid groupId)
         {
             var stationDb = await _dbContext.ChargeStation.FirstOrDefaultAsync(x => x.Id == id && x.GroupId == groupId);
             if (stationDb == null)
@@ -40,7 +41,7 @@ namespace SmartCharging.DataAccess
             return stationDb;
         }
 
-        public async Task<ChargeStation> GetWithConnectors(int id)
+        public async Task<ChargeStation> GetWithConnectors(Guid id)
         {
             var stationDb = await _dbContext.ChargeStation.Include(station => station.Connectors).Include(station => station.Group).FirstOrDefaultAsync(x => x.Id == id);
             if (stationDb == null)
@@ -52,7 +53,7 @@ namespace SmartCharging.DataAccess
 
 
 
-        public async Task Delete(int groupId, int id)
+        public async Task Delete(Guid groupId, Guid id)
         {
             var charge = await GetById(id, groupId);
             _dbContext.ChargeStation.Remove(charge);

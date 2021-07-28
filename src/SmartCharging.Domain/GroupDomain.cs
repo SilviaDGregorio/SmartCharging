@@ -17,7 +17,7 @@ namespace SmartCharging.Domain
             _groupService = groupService;
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(Guid id)
         {
             try
             {

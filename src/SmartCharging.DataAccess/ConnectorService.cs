@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartCharging.Domain.Entities;
 using SmartCharging.Domain.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -31,7 +32,7 @@ namespace SmartCharging.DataAccess
             return connectorDb;
         }
 
-        private async Task<Connector> GetById(int id, int chargeStationId)
+        private async Task<Connector> GetById(int id, Guid chargeStationId)
         {
             var connectorDb = await _dbContext.Connector.FirstOrDefaultAsync(x => x.Id == id && x.ChargeStationId == chargeStationId);
             if (connectorDb == null)

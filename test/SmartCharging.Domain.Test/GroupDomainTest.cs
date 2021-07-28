@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using SmartCharging.Domain.Entities;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System;
 
 namespace SmartCharging.Domain.Test
 {
@@ -15,13 +16,14 @@ namespace SmartCharging.Domain.Test
         private readonly ILogger<GroupDomain> _logger;
         private readonly IGroupService _groupService;
         private readonly GroupDomain _groupDomain;
+        private readonly Guid _guid;
 
         public GroupDomainTest()
         {
 
             _logger = Substitute.For<ILogger<GroupDomain>>();
             _groupService = Substitute.For<IGroupService>();
-
+            _guid = Guid.Parse("16995826-f123-46e3-9c6e-e5164ba2b40d");
             _groupDomain = new GroupDomain(_groupService, _logger);
         }
 
@@ -32,10 +34,10 @@ namespace SmartCharging.Domain.Test
             Group group = new Group()
             {
                 Amps = 5,
-                Id = 1
+                Id = _guid
             };
 
-            _groupService.GetById(1).Returns(new Group() { Id = 1, UsedAmps = 6, Amps = 7 });
+            _groupService.GetById(_guid).Returns(new Group() { Id = _guid, UsedAmps = 6, Amps = 7 });
 
 
             //Act
