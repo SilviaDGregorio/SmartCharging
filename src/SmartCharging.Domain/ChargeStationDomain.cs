@@ -29,7 +29,7 @@ namespace SmartCharging.Domain
                 var group = station.Group;
                 group.UsedAmps -= sumAmps;
                 await _chargeStationService.Delete(groupId, id);
-                await _groupService.Update(group);
+                await _groupService.UpdateUsedAmps(group);
 
             }
             catch (Exception ex)

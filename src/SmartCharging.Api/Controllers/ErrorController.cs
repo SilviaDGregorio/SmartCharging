@@ -11,6 +11,7 @@ namespace SmartCharging.Api.Controllers
     [ApiController]
     [Route("[controller]")]
     [ApiExplorerSettings(IgnoreApi = true)]
+
     public class ErrorController : ControllerBase
     {
         [Route("/error-local-development")]

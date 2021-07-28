@@ -135,7 +135,7 @@ namespace SmartCharging.Domain.Test
             var response = await _connectorDomain.Save(connector);
 
             //Assert
-            await _groupService.Received().Update(Arg.Is<Group>(x => x.UsedAmps == 1));
+            await _groupService.Received().UpdateUsedAmps(Arg.Is<Group>(x => x.UsedAmps == 1));
             response.Should().BeEquivalentTo(connectorExpected);
         }
 
@@ -172,7 +172,7 @@ namespace SmartCharging.Domain.Test
             var response = await _connectorDomain.Save(connector);
 
             //Assert
-            await _groupService.Received().Update(Arg.Is<Group>(x => x.UsedAmps == 1));
+            await _groupService.Received().UpdateUsedAmps(Arg.Is<Group>(x => x.UsedAmps == 1));
             response.Should().BeEquivalentTo(connectorExpected);
         }
         #endregion
@@ -251,7 +251,7 @@ namespace SmartCharging.Domain.Test
             var response = await _connectorDomain.Update(connector);
 
             //Assert
-            await _groupService.Received().Update(Arg.Is<Group>(x => x.UsedAmps == 1));
+            await _groupService.Received().UpdateUsedAmps(Arg.Is<Group>(x => x.UsedAmps == 1));
             response.Should().BeEquivalentTo(connector);
         }
 
@@ -291,7 +291,7 @@ namespace SmartCharging.Domain.Test
             var response = await _connectorDomain.Update(connector);
 
             //Assert
-            await _groupService.Received().Update(Arg.Is<Group>(x => x.UsedAmps == 2));
+            await _groupService.Received().UpdateUsedAmps(Arg.Is<Group>(x => x.UsedAmps == 2));
             response.Should().BeEquivalentTo(connector);
         }
         #endregion
@@ -326,7 +326,7 @@ namespace SmartCharging.Domain.Test
 
             //Assert
             await _connectorService.Received().Update(Arg.Is<Connector>(x => x.Active == false && x.Id == 5));
-            await _groupService.Received().Update(Arg.Is<Group>(x => x.UsedAmps == 0));
+            await _groupService.Received().UpdateUsedAmps(Arg.Is<Group>(x => x.UsedAmps == 0));
         }
         #endregion
     }

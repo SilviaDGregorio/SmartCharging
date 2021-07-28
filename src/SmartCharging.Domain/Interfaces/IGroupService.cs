@@ -10,5 +10,6 @@ namespace SmartCharging.Domain.Interfaces
         Task<Group> Update(Group group);
         Task Delete(Guid id);
         Task<Group> GetById(Guid id);
+        Task UpdateUsedAmps(Group group);
     }
 }

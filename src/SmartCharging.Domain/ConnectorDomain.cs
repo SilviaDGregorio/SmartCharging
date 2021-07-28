@@ -42,7 +42,7 @@ namespace SmartCharging.Domain
                 await _connectorService.Save(connector);
             }
 
-            await _groupService.Update(chargeStation.Group);
+            await _groupService.UpdateUsedAmps(chargeStation.Group);
             return connector;
         }
 
@@ -64,7 +64,7 @@ namespace SmartCharging.Domain
                 }
 
                 connectorDb = await _connectorService.Update(connector);
-                await _groupService.Update(chargeStation.Group);
+                await _groupService.UpdateUsedAmps(chargeStation.Group);
                 return connectorDb;
             }
             catch (Exception ex)
@@ -83,7 +83,7 @@ namespace SmartCharging.Domain
                 connectorDb.Active = false;
                 chargeStation.Group.UsedAmps -= connectorDb.Amps;
                 await _connectorService.Update(connectorDb);
-                await _groupService.Update(chargeStation.Group);
+                await _groupService.UpdateUsedAmps(chargeStation.Group);
 
             }
             catch (Exception ex)
